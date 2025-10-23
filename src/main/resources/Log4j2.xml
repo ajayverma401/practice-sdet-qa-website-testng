@@ -1,0 +1,39 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<Configuration status = "WARN">
+
+	<Properties>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+
+	<Appenders>
+		<Console name = "Console" target = "SYSTEM_OUT">
+			<PatternLayout pattern = "${pattern}"/>	
+		</Console>
+		
+		<File name = "File" fileName = "logs/latestRun.log" append = "false">
+		    <PatternLayout pattern = "${pattern}"/>
+		</File>
+		
+		<RollingFile name = "RollingFile" 
+					fileName = "logs/automationLogs.log"
+					filePattern = "logs/automationLogs-%d{yyyy-MM-dd}.log.gz"
+					append = "true">
+				<PatternLayout pattern = "${pattern}"/>
+				<Policies>
+					 <!-- Roll over daily -->
+					<TimeBasedTriggeringPolicy interval ="1" modulate = "true"/>
+					 <!-- Roll over if file size exceeds 5 MB -->
+					<SizeBasedTriggeringPolicy size = "5 MB"/>
+				</Policies>
+		</RollingFile>	
+	</Appenders>
+	
+	<Loggers>
+		<Root level = "TRACE">
+			<AppenderRef ref = "Console"/>
+			<AppenderRef ref = "File"/>
+			<AppenderRef ref  = "RollingFile"/>
+		</Root>
+	</Loggers>
+	
+</Configuration>

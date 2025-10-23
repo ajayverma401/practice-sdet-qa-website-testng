@@ -1,0 +1,10 @@
+# do not use tabs in yml file, use spaces only
+browser : edge 
+baseURL : https://testautomationpractice.blogspot.com/
+loginTestURL : https://practicetestautomation.com/practice-test-login/
+name : Ajay
+email : ajayverma@gmail.com	
+phone : 09171092994
+address : Pune, India
+
+

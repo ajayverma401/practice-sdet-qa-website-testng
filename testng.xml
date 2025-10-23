@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+<!--implementing listeners at suite level (recommended for large projects)-->
+
+<listeners>
+	<listener class-name="com.ajay.automation.utils.TestListener"/>
+</listeners> 
+
+
+  <test name="Test">
+  
+      <!-- parameters can be defined at suite level or test level -->
+      <parameter name = "browser" value = "edge"/>
+ 	 	<parameter name  = "username" value = "student"/>
+  		<parameter name = "password" value = "Password123"/>
+  		<!--<parameter name  = "username" value = "student"/> this is also correct, order dosent matter, only name must be matching --> 
+    
+    <!--
+	    <groups>
+			<run>
+				<include name  = "sanity"/>
+			</run>
+	 	</groups>   -->
+	 	
+	 	<!-- group of groups(Meta group)-->	
+	 	<!--
+	 	<groups>
+			<define name  = "functional">
+				<include name = "Smoke"/>
+				<include name = "Regression"/>
+			</define>
+			<run>
+				<include name  = "functional"/>
+			</run>
+	 	</groups>  --> 	  
+
+    <classes>
+       <class name="com.ajay.automation.tests.ValidateInputFields"/>
+       <class name="com.ajay.automation.tests.ParameterizedTest"/>
+       <class name="com.ajay.automation.tests.GroupsTest"/>        
+    </classes>
+    
+    
+    
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+<!--
+Why is / important?
+
+If you write <class ...> (without / at end) → XML thinks more content will come inside → expects a closing </class>.
+
+If you forget to close it → XML parser throws error (well-formedness error).
+
+If you add / at the end (<class .../>) → XML knows this tag is complete in itself → no need for closing tag.
+
+Memory Rule
+
+With children (nested tags inside) → use opening + closing tags (<class> ... </class>).
+
+Without children (empty tag) → use self-closing tag (<class .../>).
+-->
