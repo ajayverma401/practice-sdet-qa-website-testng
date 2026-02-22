@@ -1,4 +1,4 @@
-# do not use tabs in yml file, use spaces only
+# do not use TAB in yml file, use spaces only
 browser : edge 
 baseURL : https://testautomationpractice.blogspot.com/
 loginTestURL : https://practicetestautomation.com/practice-test-login/
