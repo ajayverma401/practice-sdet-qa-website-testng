@@ -1,15 +1,15 @@
 package com.ajay.automation.base;
 
-import java.time.Duration;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
+import com.ajay.automation.utils.ConfigReaderUtils;
 import com.ajay.automation.utils.LogHelper;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -70,20 +70,32 @@ public class BaseClass {
 	public static WebDriver getDriver(){
 		return driver.get();
 
+
+
 	}
+
+	String checkHeadlessMode = ConfigReaderUtils.get("headless");
+
 
 	@BeforeClass
 	@Parameters("browser")
 	public void browserSetup(String browserName){
 		LogHelper.info(browserName + " is being launched");
 
+
 		if(browserName.equalsIgnoreCase("chrome")){
 			WebDriverManager.chromedriver().setup();
 			driver.set(new ChromeDriver());
 		}
 		else if(browserName.equalsIgnoreCase("edge")){
+
 			WebDriverManager.edgedriver().setup();
-			driver.set( new EdgeDriver());
+			EdgeOptions options = new EdgeOptions();
+			options.addArguments("--headless=new");
+			options.addArguments("--disable-gpu");
+			options.addArguments("--remote-allow-origins=*");
+			options.addArguments("--window-size=1920,1080");
+			driver.set(new EdgeDriver(options));
 		}
 		else if(browserName.equalsIgnoreCase("firefox")){
 			WebDriverManager.firefoxdriver().setup();
@@ -92,9 +104,9 @@ public class BaseClass {
 		else {
 			System.out.println("Kindly choose valid browser");
 		}
-		
+
 		getDriver().manage().window().maximize();
-//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		System.out.println("current thread: " + Thread.currentThread().getName());
 	}
 	@AfterClass
